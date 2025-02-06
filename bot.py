@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 import argparse
-
 import pygame
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -17,6 +16,22 @@ def main(args):
         item_url = args.url
 
     driver = webdriver.Chrome()
+
+    username = ""
+    password = ""
+
+    # login lol
+    driver.get("https://www.target.com/account")
+    wait = WebDriverWait(driver, 30)
+    username_field = wait.until(EC.presence_of_element_located((By.ID, "username")))
+    password_field = wait.until(EC.presence_of_element_located((By.ID, "password")))
+
+    username_field.send_keys(username)
+    password_field.send_keys(password)
+
+    login_button = wait.until(EC.element_to_be_clickable((By.ID, "login")))
+    login_button.click()
+
     driver.get(item_url)
     
     buy_button = None
